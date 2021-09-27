@@ -17,6 +17,7 @@ import { HttpExceptionFilter } from 'src/common/exceptions/http-exception.filter
 import { SuccessInterceptor } from 'src/common/interceptors/success.intercept';
 import { PositiveIntPipe } from 'src/common/pipes/positiveInt.pipe';
 import { CatsService } from './cats.service';
+import { ReadOnlyCatDto } from './dto/cat.dto';
 import { CatRequestDto } from './dto/cats.request.dto';
 
 @Controller('cats')
@@ -38,6 +39,7 @@ export class CatsController {
   @ApiResponse({
     status: 200,
     description: '성공!',
+    type: ReadOnlyCatDto,
   })
   @ApiOperation({ summary: '회원가입' })
   @Post()
