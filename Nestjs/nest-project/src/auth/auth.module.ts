@@ -9,7 +9,9 @@ import { CatsRepository } from 'src/cats/cats.repository';
 
 @Module({
   imports: [
-    PassportModule.register({ defaultStrategy: 'jwt', session: false }), //인증에 대한 설정
+    PassportModule.register({ defaultStrategy: 'jwt', session: false }),
+    // 인증에 대한 설정
+    // 세션쿠키를 사용하지 않아서 session : false
     JwtModule.register({
       secret: 'secret',
       signOptions: { expiresIn: '1y' },

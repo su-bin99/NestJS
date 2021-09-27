@@ -12,5 +12,8 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
       ignoreExpiration: false, //백엔드에서 프론트로 jwt를 넘겨줄때 그 만료기간을 지정하는 것
     });
   }
+
+  // 프론트에서 jwt가 날아왔을때,
+  // payload를 뽑아 유효성 검사
   //   async validate(payload) {}
 }
