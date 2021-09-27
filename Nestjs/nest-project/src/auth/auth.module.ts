@@ -17,5 +17,6 @@ import { CatsRepository } from 'src/cats/cats.repository';
     forwardRef(() => CatsModule),
   ],
   providers: [AuthService, JwtStrategy],
+  exports: [AuthService],
 })
 export class AuthModule {}
