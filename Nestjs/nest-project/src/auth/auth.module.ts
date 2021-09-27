@@ -13,7 +13,7 @@ import { CatsRepository } from 'src/cats/cats.repository';
     JwtModule.register({
       secret: 'secret',
       signOptions: { expiresIn: '1y' },
-    }),
+    }), // jwt를 만들어주는 모듈
     forwardRef(() => CatsModule),
   ],
   providers: [AuthService, JwtStrategy],
