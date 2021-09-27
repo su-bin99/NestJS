@@ -29,6 +29,6 @@ export class CatsService {
       password: hashedPassword,
     });
 
-    return cat;
+    return cat.readOnlyData;
   }
 }
