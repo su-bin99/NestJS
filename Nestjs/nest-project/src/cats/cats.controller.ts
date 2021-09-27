@@ -19,6 +19,7 @@ import { Request } from 'express';
 import { AuthService } from 'src/auth/auth.service';
 import { LoginRequestDto } from 'src/auth/dto/login.request.dto';
 import { JwtAuthGuard } from 'src/auth/jwt/jwt.guard';
+import { CurrentUser } from 'src/common/decorators/user.decorator';
 import { HttpExceptionFilter } from 'src/common/exceptions/http-exception.filter';
 import { SuccessInterceptor } from 'src/common/interceptors/success.intercept';
 import { PositiveIntPipe } from 'src/common/pipes/positiveInt.pipe';
@@ -38,9 +39,9 @@ export class CatsController {
   @ApiOperation({ summary: '현재 고양이 가져오기' })
   @UseGuards(JwtAuthGuard)
   @Get()
-  getCurrentCat(@Req() req: Request) {
-    console.log(req);
-    return req.user;
+  getCurrentCat(@CurrentUser() cat) {
+    console.log(cat);
+    return cat.readOnlyData;
   }
 
   @ApiResponse({
