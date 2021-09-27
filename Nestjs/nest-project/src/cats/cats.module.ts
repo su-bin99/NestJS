@@ -1,4 +1,4 @@
-import { Module } from '@nestjs/common';
+import { forwardRef, Module } from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose';
 import { AuthModule } from 'src/auth/auth.module';
 import { CatsController } from './cats.controller';
@@ -9,7 +9,7 @@ import { CatsService } from './cats.service';
 @Module({
   imports: [
     MongooseModule.forFeature([{ name: Cat.name, schema: CatSchema }]),
-    AuthModule,
+    forwardRef(() => AuthModule),
   ],
   controllers: [CatsController],
   providers: [CatsService, CatsRepository],

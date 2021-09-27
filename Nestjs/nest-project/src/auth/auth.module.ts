@@ -14,7 +14,7 @@ import { CatsRepository } from 'src/cats/cats.repository';
       secret: 'secret',
       signOptions: { expiresIn: '1y' },
     }),
-    CatsRepository,
+    forwardRef(() => CatsModule),
   ],
   providers: [AuthService, JwtStrategy],
 })
