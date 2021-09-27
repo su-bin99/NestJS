@@ -6,6 +6,7 @@ import { CatsService } from './cats/cats.service';
 import { LoggerMiddleware } from './common/middlewares/logger.middleware';
 import { MongooseModule } from '@nestjs/mongoose';
 import { ConfigModule } from '@nestjs/config';
+import * as mongoose from 'mongoose';
 
 @Module({
   imports: [
@@ -20,9 +21,10 @@ import { ConfigModule } from '@nestjs/config';
   providers: [AppService],
 })
 export class AppModule implements NestModule {
+  private readonly isDev: boolean = process.env.MODE === 'dev' ? true : false;
   configure(consumer: MiddlewareConsumer) {
     consumer.apply(LoggerMiddleware).forRoutes('*');
-    //forRoutes('cats') : cats 라우터에 바인딩
-    //forRoutes('*') : 전체 엔드포인트에 대해서 앞에서 이 미들웨어가 실행됨
+    mongoose.set('debug', this.isDev);
+    // 개발시에 몽구스 쿼리가 로그로 찍힘
   }
 }
