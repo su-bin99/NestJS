@@ -21,7 +21,7 @@ export class Cat extends Document {
   })
   @IsString()
   @IsNotEmpty()
-  catname: string;
+  name: string;
 
   @Prop({
     required: true,

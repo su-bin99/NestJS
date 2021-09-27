@@ -30,9 +30,8 @@ export class CatsController {
   }
 
   @Post()
-  signUp(@Body() body: CatRequestDto) {
-    console.log(body);
-    return 'signup';
+  async signUp(@Body() body: CatRequestDto) {
+    return await this.catsService.signUp(body);
   }
 
   @Post('login')
