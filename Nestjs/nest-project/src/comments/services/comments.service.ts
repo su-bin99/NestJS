@@ -13,7 +13,12 @@ export class CommentsService {
   ) {}
 
   async getAllComments() {
-    return 'hello world';
+    try {
+      const comments = await this.commentsModel.find();
+      return comments;
+    } catch (error) {
+      throw new BadRequestException(error.message);
+    }
   }
 
   async createComment(id: string, commentData: CommentsCreateDTO) {
