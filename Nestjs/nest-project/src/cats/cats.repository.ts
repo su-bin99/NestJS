@@ -1,7 +1,7 @@
 import { HttpException } from '@nestjs/common';
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
-import { Model } from 'mongoose';
+import { Model, Types } from 'mongoose';
 import { Cat } from './cats.schema';
 import { CatRequestDto } from './dtos/cats.request.dto';
 
@@ -22,7 +22,9 @@ export class CatsRepository {
     return result;
   }
 
-  async findCatByIdWithoutPassword(catId: string): Promise<Cat | null> {
+  async findCatByIdWithoutPassword(
+    catId: string | Types.ObjectId,
+  ): Promise<Cat | null> {
     const cat = await this.catModel.findById(catId).select('-password');
     //-를 붙여서 password를 제외시킴 (보안상의 이유로 안가져옴)
     return cat;
