@@ -32,4 +32,16 @@ export class CatsService {
 
     return cat.readOnlyData;
   }
+
+  async uploadImg(cat: Cat, files: Express.Multer.File[]) {
+    const fileName = `cats/${files[0].filename}`;
+
+    console.log(fileName);
+    const newCat = await this.catsRepository.findCatByIdAndUpdateImg(
+      cat.id,
+      fileName,
+    );
+    console.log(newCat);
+    return newCat;
+  }
 }

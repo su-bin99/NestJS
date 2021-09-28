@@ -26,6 +26,7 @@ import { HttpExceptionFilter } from 'src/common/exceptions/http-exception.filter
 import { SuccessInterceptor } from 'src/common/interceptors/success.intercept';
 import { PositiveIntPipe } from 'src/common/pipes/positiveInt.pipe';
 import { multerOptions } from 'src/common/utils/multer.options';
+import { Cat } from './cats.schema';
 import { CatsService } from './cats.service';
 import { ReadOnlyCatDto } from './dto/cat.dto';
 import { CatRequestDto } from './dto/cats.request.dto';
@@ -77,10 +78,12 @@ export class CatsController {
   @ApiOperation({ summary: '고양이 이미지 업로드' })
   @UseInterceptors(FilesInterceptor('image', 10, multerOptions('cats')))
   @Post('upload')
-  uploadCatImg(@UploadedFiles() files: Array<Express.Multer.File>) {
+  uploadCatImg(
+    @UploadedFiles() files: Array<Express.Multer.File>,
+    @CurrentUser() cat: Cat,
+  ) {
     console.log(files);
-    return {
-      image: `http://localhost:8000/media/cats/${files[0].filename}`,
-    };
+    // return { image: `http://localhost:8000/media/cats/${files[0].filename}` };
+    return this.catsService.uploadImg(cat, files);
   }
 }
