@@ -4,11 +4,11 @@ import {
   UnauthorizedException,
 } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
-import { CatRequestDto } from './dto/cats.request.dto';
-import { Cat } from './cats.schema';
 import { Model } from 'mongoose';
 import * as bcrypt from 'bcrypt';
-import { CatsRepository } from './cats.repository';
+import { CatRequestDto } from '../dto/cats.request.dto';
+import { Cat } from '../cats.schema';
+import { CatsRepository } from '../cats.repository';
 
 @Injectable()
 export class CatsService {

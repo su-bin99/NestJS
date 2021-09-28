@@ -26,10 +26,10 @@ import { HttpExceptionFilter } from 'src/common/exceptions/http-exception.filter
 import { SuccessInterceptor } from 'src/common/interceptors/success.intercept';
 import { PositiveIntPipe } from 'src/common/pipes/positiveInt.pipe';
 import { multerOptions } from 'src/common/utils/multer.options';
-import { Cat } from './cats.schema';
-import { CatsService } from './cats.service';
-import { ReadOnlyCatDto } from './dto/cat.dto';
-import { CatRequestDto } from './dto/cats.request.dto';
+import { ReadOnlyCatDto } from '../dto/cat.dto';
+import { CatsService } from '../services/cats.service';
+import { CatRequestDto } from '../dto/cats.request.dto';
+import { Cat } from '../cats.schema';
 
 @Controller('cats')
 @UseInterceptors(SuccessInterceptor)
