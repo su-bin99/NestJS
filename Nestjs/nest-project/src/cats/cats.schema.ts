@@ -4,6 +4,7 @@ import { IsEmail, IsNotEmpty, IsString } from 'class-validator';
 import { ApiProperty } from '@nestjs/swagger';
 
 const options: SchemaOptions = {
+  collection: 'cats',
   timestamps: true, //디비에서 하나가 만들어질 때 시간이 찍히도록
 };
 
