@@ -36,9 +36,6 @@ export class ChatsGateway
     @MessageBody() username: string,
     @ConnectedSocket() socket: Socket,
   ) {
-    console.log(username);
-    console.log(socket.id);
-    socket.emit('hello_user', `안녕 ${username}야`);
-    return '리턴값';
+    return username;
   }
 }
