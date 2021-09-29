@@ -10,20 +10,47 @@ const formElement = getElementById('chat_form');
 socket.on('user_connected', (username) => {
   console.log(`${username} connected!`);
 });
+socket.on('new_chat', (data) => {
+  const { chat, username } = data;
+  drawNewChat(`${username}: ${chat}`);
+});
+
+//* event callback functions
+const handleSubmit = (event) => {
+  event.preventDefault(); //새로고침 방지
+  const inputValue = event.target.elements[0].value;
+  if (inputValue !== '') {
+    socket.emit('submit_chat', inputValue);
+    // 화면에다가 그리기
+    drawNewChat(`me : ${inputValue}`);
+    event.target.elements[0].value = '';
+  }
+};
 
 //* draw functions
 const drawHelloStranger = (username) =>
   (helloStrangerElement.innerText = `Hello ${username} Stranger :)`);
+const drawNewChat = (message) => {
+  const wrapperChatBox = document.createElement('div');
+  const chatBox = `
+        <div>
+          ${message}
+        </div>
+        `;
+  wrapperChatBox.innerHTML = chatBox;
+  chattingBoxElement.append(wrapperChatBox);
+};
 
 function helloUser() {
-  const username = prompt('What is your name?');
-  socket.emit('new_user', username, (data) => {
-    drawHelloStranger(data);
-  });
+  //   const username = prompt('What is your name?');
+  //   socket.emit('new_user', username, (data) => {
+  //     drawHelloStranger(data);
+  //   });
 }
 
 function init() {
   helloUser();
+  formElement.addEventListener('submit', handleSubmit);
 }
 
 init();
