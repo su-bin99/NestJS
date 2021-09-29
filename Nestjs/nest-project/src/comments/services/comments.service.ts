@@ -4,17 +4,18 @@ import { Model } from 'mongoose';
 import { CatsRepository } from 'src/cats/cats.repository';
 import { Comments } from '../comments.schema';
 import { CommentsCreateDTO } from '../dtos/comments.create.dto';
+import { CommentsRepository } from '../comments.repository';
 
 @Injectable()
 export class CommentsService {
   constructor(
-    @InjectModel(Comments.name) private readonly commentsModel: Model<Comments>,
     private readonly catsRepository: CatsRepository,
+    private readonly commentsRepository: CommentsRepository,
   ) {}
 
   async getAllComments() {
     try {
-      const comments = await this.commentsModel.find();
+      const comments = await this.commentsRepository.findComments();
       return comments;
     } catch (error) {
       throw new BadRequestException(error.message);
@@ -29,12 +30,11 @@ export class CommentsService {
       const { contents, author } = commentData;
       const validatedAuthor =
         await this.catsRepository.findCatByIdWithoutPassword(author);
-      const newComment = new this.commentsModel({
-        author: validatedAuthor._id,
+      this.commentsRepository.createComment(
+        targetCat._id,
         contents,
-        info: targetCat._id,
-      });
-      return await newComment.save();
+        validatedAuthor._id,
+      );
     } catch (error) {
       throw new BadRequestException(error.message);
     }
@@ -42,9 +42,7 @@ export class CommentsService {
 
   async plusLike(id: string) {
     try {
-      const comment = await this.commentsModel.findById(id);
-      comment.likeCount += 1;
-      return await comment.save();
+      this.commentsRepository.findCommentsByIdAndPlusLike(id);
     } catch (error) {}
   }
 }
