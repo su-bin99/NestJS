@@ -8,7 +8,7 @@ const formElement = getElementById('chat_form');
 
 //* global socket handler
 socket.on('user_connected', (username) => {
-  console.log(`${username} connected!`);
+  drawNewChat(`${username} connected`);
 });
 socket.on('new_chat', (data) => {
   const { chat, username } = data;
@@ -42,10 +42,10 @@ const drawNewChat = (message) => {
 };
 
 function helloUser() {
-  //   const username = prompt('What is your name?');
-  //   socket.emit('new_user', username, (data) => {
-  //     drawHelloStranger(data);
-  //   });
+  const username = prompt('What is your name?');
+  socket.emit('new_user', username, (data) => {
+    drawHelloStranger(data);
+  });
 }
 
 function init() {
